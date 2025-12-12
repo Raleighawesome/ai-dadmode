@@ -1,5 +1,6 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import SetupWizard from '../../components/SetupWizard/SetupWizard.astro';
 ---
 
 <DocsLayout
@@ -24,46 +25,9 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
     <li><strong>Full Transcript</strong> - Complete transcript in a collapsible section</li>
   </ul>
 
-  <h2>Prerequisites</h2>
-
-  <ul>
-    <li><strong>Claude Code</strong> installed and configured</li>
-    <li><strong>Python 3.8+</strong> installed</li>
-    <li><strong>Obsidian vault</strong> (or any markdown-based notes system)</li>
-  </ul>
-
   <h2 id="installation">Installation</h2>
 
-  <h3>Step 1: Install Python Dependency</h3>
-
-  <p>Install the YouTube transcript API library:</p>
-
-  <pre><code>pip install youtube-transcript-api</code></pre>
-
-  <h3>Step 2: Download the Python Script</h3>
-
-  <p>Save the transcript extractor script to your scripts folder:</p>
-
-  <pre><code>mkdir -p ~/scripts
-curl -o ~/scripts/youtube_transcript_extractor.py \
-  https://raw.githubusercontent.com/Raleighawesome/ai-dadmode/main/downloads/youtube_transcript_extractor.py
-chmod +x ~/scripts/youtube_transcript_extractor.py</code></pre>
-
-  <h3>Step 3: Create the Claude Code Command</h3>
-
-  <p>Create the command file in your Claude Code commands directory:</p>
-
-  <pre><code>mkdir -p ~/.claude/commands
-curl -o ~/.claude/commands/youtube.md \
-  https://raw.githubusercontent.com/Raleighawesome/ai-dadmode/main/downloads/youtube.md</code></pre>
-
-  <h3>Step 4: Verify Installation</h3>
-
-  <p>Test that the script works:</p>
-
-  <pre><code>python3 ~/scripts/youtube_transcript_extractor.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ"</code></pre>
-
-  <p>You should see JSON output with the video transcript.</p>
+  <SetupWizard />
 
   <h2 id="usage">Usage</h2>
 
@@ -133,7 +97,7 @@ Full transcript text here...
 
   <h2 id="downloads">Downloads</h2>
 
-  <p>Download the files directly:</p>
+  <p>Prefer to install manually? Download the files directly:</p>
 
   <div class="flex flex-wrap gap-4 my-6 not-prose">
     <a
