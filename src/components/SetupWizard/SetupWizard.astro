@@ -434,6 +434,10 @@ import CopyButton from './CopyButton.astro';
           state.completedSteps = [1, 2, 3, 4, 5];
           saveState(state);
           showComplete();
+          // Track setup completion in Umami
+          if (typeof umami !== 'undefined') {
+            umami.track('setup-complete');
+          }
         } else {
           const next = parseInt(nextStep || '1');
           state.currentStep = next;
