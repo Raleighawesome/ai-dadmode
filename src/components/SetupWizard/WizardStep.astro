@@ -1,0 +1,54 @@
+---
+interface Props {
+  stepNumber: number;
+  title: string;
+  description: string;
+  status?: 'upcoming' | 'current' | 'completed';
+}
+
+const { stepNumber, title, description, status = 'upcoming' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'wizard-step',
+    'relative pl-12 pb-8 border-l-2',
+    {
+      'border-border opacity-50': status === 'upcoming',
+      'border-accent': status === 'current',
+      'border-green-500': status === 'completed',
+    }
+  ]}
+  data-step={stepNumber}
+  data-status={status}
+>
+  <!-- Step indicator circle -->
+  <div
+    class:list={[
+      'absolute -left-[13px] w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium',
+      {
+        'bg-surface border-2 border-border text-text-muted': status === 'upcoming',
+        'bg-accent border-2 border-accent text-white': status === 'current',
+        'bg-green-500 border-2 border-green-500 text-white': status === 'completed',
+      }
+    ]}
+  >
+    {status === 'completed' ? (
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+    ) : (
+      stepNumber
+    )}
+  </div>
+
+  <!-- Step content -->
+  <div class="step-header mb-4">
+    <h3 class="text-lg font-semibold text-text-primary">{title}</h3>
+    <p class="text-sm text-text-secondary">{description}</p>
+  </div>
+
+  <div class:list={['step-content', { 'hidden': status === 'upcoming' }]}>
+    <slot />
+  </div>
+</div>
