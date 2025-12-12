@@ -1,0 +1,74 @@
+---
+interface Tool {
+  name: string;
+  description: string;
+  category: 'Command' | 'Script' | 'Project';
+  href: string;
+  external?: boolean;
+  icon: string;
+}
+
+const tools: Tool[] = [
+  {
+    name: 'YouTube Transcript Extractor',
+    description: 'Extract YouTube transcripts to Obsidian notes with Claude Code',
+    category: 'Command',
+    href: '/commands/youtube',
+    icon: '🎬',
+  },
+  {
+    name: 'AI Executive Assistant',
+    description: 'Meeting processing, summaries, and action item extraction',
+    category: 'Project',
+    href: 'https://ai-assistant.dadmode.cc',
+    external: true,
+    icon: '📋',
+  },
+];
+
+const categoryColors: Record<string, string> = {
+  Command: 'border-purple-500/50 text-purple-400',
+  Script: 'border-green-500/50 text-green-400',
+  Project: 'border-blue-500/50 text-blue-400',
+};
+---
+
+<section id="tools" class="py-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-text-primary mb-4 text-center">Tools</h2>
+    <p class="text-text-secondary text-center mb-12 max-w-2xl mx-auto">
+      A growing collection of AI-powered scripts and commands to automate your workflow.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {tools.map((tool) => (
+        <a
+          href={tool.href}
+          target={tool.external ? '_blank' : undefined}
+          rel={tool.external ? 'noopener noreferrer' : undefined}
+          class="card-hover group block"
+        >
+          <div class="flex items-start gap-4">
+            <span class="text-3xl">{tool.icon}</span>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-2">
+                <h3 class="text-lg font-semibold text-text-primary group-hover:text-accent transition-colors">
+                  {tool.name}
+                </h3>
+                {tool.external && (
+                  <svg class="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                )}
+              </div>
+              <p class="text-text-secondary text-sm mb-3">{tool.description}</p>
+              <span class={`tag ${categoryColors[tool.category]}`}>
+                {tool.category}
+              </span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
