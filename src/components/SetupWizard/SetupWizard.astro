@@ -5,8 +5,8 @@ import CopyButton from './CopyButton.astro';
 <div id="setup-wizard" class="wizard-container my-8">
   <!-- Collapsed state (before starting) -->
   <div id="wizard-intro" class="card text-center py-8">
-    <h3 class="text-xl font-semibold text-text-primary mb-2">Ready to install?</h3>
-    <p class="text-text-secondary mb-6">This takes about 2 minutes. We'll guide you through each step.</p>
+    <h3 class="text-xl font-semibold text-text-primary mb-2">Let's get you set up!</h3>
+    <p class="text-text-secondary mb-6">This takes about 2 minutes. We'll walk through it together, step by step. No coding experience needed!</p>
     <button id="start-wizard-btn" class="btn-primary">
       Start Setup
     </button>
@@ -15,10 +15,10 @@ import CopyButton from './CopyButton.astro';
   <!-- Welcome back state -->
   <div id="wizard-resume" class="card text-center py-8 hidden">
     <h3 class="text-xl font-semibold text-text-primary mb-2">Welcome back!</h3>
-    <p class="text-text-secondary mb-6">You were on step <span id="resume-step">1</span> of 5.</p>
+    <p class="text-text-secondary mb-6">You were on step <span id="resume-step">1</span> of 5. Let's pick up where you left off!</p>
     <div class="flex justify-center gap-4">
-      <button id="continue-wizard-btn" class="btn-primary">Continue</button>
-      <button id="restart-wizard-btn" class="btn-secondary">Start Over</button>
+      <button id="continue-wizard-btn" class="btn-primary">Continue Setup</button>
+      <button id="restart-wizard-btn" class="btn-secondary">Start Fresh</button>
     </div>
   </div>
 
@@ -41,8 +41,8 @@ import CopyButton from './CopyButton.astro';
         <div class="step-line"></div>
       </div>
       <div class="step-content">
-        <h3 class="step-title">Let's check a couple things first</h3>
-        <p class="step-description">First, a couple quick checks...</p>
+        <h3 class="step-title">Quick check before we start</h3>
+        <p class="step-description">Just making sure you have the basics ready. This only takes a sec!</p>
 
         <div class="prereq-check my-4" data-prereq="claude">
           <p class="mb-3">Do you have <strong>Claude Code</strong> installed?</p>
@@ -146,26 +146,27 @@ import CopyButton from './CopyButton.astro';
         <div class="step-line"></div>
       </div>
       <div class="step-content">
-        <h3 class="step-title">Verify installation</h3>
-        <p class="step-description">Let's make sure everything's working...</p>
+        <h3 class="step-title">Let's make sure it works!</h3>
+        <p class="step-description">One quick test to confirm everything is set up correctly.</p>
 
         <div class="step-body hidden">
-          <p class="text-text-secondary mb-4">Run this test command:</p>
+          <p class="text-text-secondary mb-4">Copy and run this test command - it'll grab a sample transcript:</p>
           <div id="test-script-cmd"></div>
-          <p class="text-text-secondary mt-4 text-sm">See a bunch of JSON text? You're all set!</p>
+          <p class="text-text-secondary mt-4 text-sm">See a bunch of text with timestamps scroll by? That means it's working!</p>
           <button class="step-done-btn btn-primary mt-6" data-next="complete">
             It works! Complete setup
           </button>
 
           <details class="mt-4">
-            <summary class="text-text-muted cursor-pointer hover:text-text-secondary">Having trouble?</summary>
+            <summary class="text-text-muted cursor-pointer hover:text-text-secondary">Didn't work? No worries, let's troubleshoot!</summary>
             <div class="mt-2 p-4 bg-surface rounded-lg border border-border text-sm">
-              <p class="text-text-secondary">Common issues:</p>
+              <p class="text-text-secondary">Here are a few things to try:</p>
               <ul class="list-disc list-inside mt-2 text-text-muted space-y-1">
-                <li>Make sure Python is in your PATH</li>
-                <li>Try <code>python</code> instead of <code>python3</code></li>
-                <li>Check that the script file exists in ~/scripts/</li>
+                <li>Try using <code>python</code> instead of <code>python3</code> (some systems are set up differently)</li>
+                <li>Make sure the script downloaded correctly - look for the file in your scripts folder</li>
+                <li>If you're on Windows, make sure you're using PowerShell, not Command Prompt</li>
               </ul>
+              <p class="text-text-secondary mt-3">Still stuck? Drop a comment on TikTok and I'll help you out!</p>
             </div>
           </details>
         </div>
@@ -181,11 +182,12 @@ import CopyButton from './CopyButton.astro';
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
         </svg>
       </div>
-      <h3 class="text-xl font-semibold text-text-primary mb-2">You did it!</h3>
-      <p class="text-text-secondary mb-4">The <code>/youtube</code> command is ready to use.</p>
-      <p class="text-text-muted text-sm">Scroll down to see usage examples.</p>
+      <h3 class="text-xl font-semibold text-text-primary mb-2">You did it! Nice work!</h3>
+      <p class="text-text-secondary mb-2">The <code>/youtube</code> command is ready to use.</p>
+      <p class="text-text-secondary mb-4">Open Claude Code, paste a YouTube link, and try it out!</p>
+      <p class="text-text-muted text-sm">Scroll down to see more usage examples and tips.</p>
       <button id="reset-wizard-btn" class="text-text-muted text-sm mt-4 hover:text-text-secondary underline">
-        Reset wizard
+        Need to reinstall? Reset wizard
       </button>
     </div>
   </div>
