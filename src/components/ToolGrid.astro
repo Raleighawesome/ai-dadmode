@@ -6,6 +6,7 @@ interface Tool {
   href: string;
   external?: boolean;
   icon: string;
+  iconType?: 'emoji' | 'image';
 }
 
 const tools: Tool[] = [
@@ -14,7 +15,8 @@ const tools: Tool[] = [
     description: 'Extract YouTube transcripts to Obsidian notes with Claude Code',
     category: 'Command',
     href: '/commands/youtube',
-    icon: '🎬',
+    icon: '/icons/youtube-command.png',
+    iconType: 'image',
   },
   {
     name: 'AI Executive Assistant',
@@ -23,6 +25,7 @@ const tools: Tool[] = [
     href: 'https://ai-assistant.dadmode.cc',
     external: true,
     icon: '📋',
+    iconType: 'emoji',
   },
 ];
 
@@ -49,7 +52,11 @@ const categoryColors: Record<string, string> = {
           class="card-hover group block"
         >
           <div class="flex items-start gap-4">
-            <span class="text-3xl">{tool.icon}</span>
+            {tool.iconType === 'image' ? (
+              <img src={tool.icon} alt="" class="w-10 h-10 rounded-lg" />
+            ) : (
+              <span class="text-3xl">{tool.icon}</span>
+            )}
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-2">
                 <h3 class="text-lg font-semibold text-text-primary group-hover:text-accent transition-colors">

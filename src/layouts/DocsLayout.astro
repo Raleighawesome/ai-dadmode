@@ -5,9 +5,10 @@ interface Props {
   title: string;
   description?: string;
   category: 'Command' | 'Script' | 'Project';
+  icon?: string;
 }
 
-const { title, description, category } = Astro.props;
+const { title, description, category, icon } = Astro.props;
 
 const categoryColors: Record<string, string> = {
   Command: 'border-purple-500/50 text-purple-400',
@@ -29,13 +30,20 @@ const categoryColors: Record<string, string> = {
 
       <!-- Header -->
       <header class="mb-12">
-        <span class={`tag ${categoryColors[category]} mb-4`}>
-          {category}
-        </span>
-        <h1 class="text-3xl sm:text-4xl font-bold text-text-primary mb-4">{title}</h1>
-        {description && (
-          <p class="text-lg text-text-secondary">{description}</p>
-        )}
+        <div class="flex items-start gap-4">
+          {icon && (
+            <img src={icon} alt="" class="w-16 h-16 rounded-xl" />
+          )}
+          <div>
+            <span class={`tag ${categoryColors[category]} mb-4`}>
+              {category}
+            </span>
+            <h1 class="text-3xl sm:text-4xl font-bold text-text-primary mb-4">{title}</h1>
+            {description && (
+              <p class="text-lg text-text-secondary">{description}</p>
+            )}
+          </div>
+        </div>
       </header>
 
       <!-- Main content -->
