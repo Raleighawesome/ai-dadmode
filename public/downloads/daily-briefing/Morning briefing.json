@@ -1,0 +1,161 @@
+{
+  "name": "Morning briefing",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "// Calculate dynamic year and quarter for meeting directories\nconst now = new Date();\nconst year = now.getFullYear();\nconst month = now.getMonth(); // 0-indexed (0=Jan, 11=Dec)\n\n// Calculate quarter (1-4)\nconst quarter = Math.floor(month / 3) + 1;\n\n// Format as 2-digit year (e.g., 25 for 2025)\nconst shortYear = year.toString().slice(-2);\n\n// Build the directory path components\nconst yearDir = year.toString();           // e.g., \"2025\"\nconst quarterDir = `Q${quarter}${shortYear}`; // e.g., \"Q425\"\nconst meetingsPath = `Meetings/${yearDir}/${quarterDir}`; // e.g., \"Meetings/2025/Q425\"\n\nfor (const item of $input.all()) {\n  item.json.year = yearDir;\n  item.json.quarter = quarterDir;\n  item.json.meetingsPath = meetingsPath;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        -176
+      ],
+      "id": "c3d9e7ec-8acf-49d6-b9e3-df642d3c8f1e",
+      "name": "Dynamic date directories"
+    },
+    {
+      "parameters": {
+        "command": "=cd ~/Obsidian/Vault && cat /tmp/calendar_data.json | ~/.local/bin/claude-wrapper -p \"/daily-briefing-v2 {{ $json.meetingsPath }}\" --output-format text --dangerously-skip-permissions",
+        "cwd": "~"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        -176
+      ],
+      "id": "1dfc4a5e-0dbe-49c3-989b-149d553b5a12",
+      "name": "Save Daily Briefing",
+      "credentials": {
+        "sshPassword": {
+          "id": "[REDACTED_CREDENTIAL_ID]",
+          "name": "SSH credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "triggerAtHour": 5
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -800,
+        -176
+      ],
+      "id": "a24130e8-303b-4e76-b7d5-f0d0e4ba9b89",
+      "name": "Weekdays at 5am"
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $json.timestamp }}",
+        "format": "custom",
+        "customFormat": "yyyy-MM-dd",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        -624,
+        -176
+      ],
+      "id": "f87e90cd-e4e2-4e5d-a616-8cbdc8b52f00",
+      "name": "Format Date"
+    },
+    {
+      "parameters": {
+        "command": "=cd ~/scripts/ai_scripts && ./calendar-events/fetch_today_events.py --date {{ $json.formattedDate }} --debug | tee /tmp/calendar_data.json",
+        "cwd": "~"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        -176
+      ],
+      "id": "5aaf49ba-0fa8-4bcd-9e65-00e5bb8d8f33",
+      "name": "Get Today's Calendar Events",
+      "credentials": {
+        "sshPassword": {
+          "id": "[REDACTED_CREDENTIAL_ID]",
+          "name": "SSH credentials"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Dynamic date directories": {
+      "main": [
+        [
+          {
+            "node": "Save Daily Briefing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Weekdays at 5am": {
+      "main": [
+        [
+          {
+            "node": "Format Date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Date": {
+      "main": [
+        [
+          {
+            "node": "Get Today's Calendar Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Today's Calendar Events": {
+      "main": [
+        [
+          {
+            "node": "Dynamic date directories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true
+  },
+  "versionId": "1a88323d-b2a5-4fc3-8620-0cbd1039b99b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "[REDACTED_INSTANCE_ID]"
+  },
+  "id": "KbDSGdkNbSe8Vdqj",
+  "tags": []
+}

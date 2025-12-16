@@ -1,0 +1,266 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import DailyBriefingWizard from '../../components/DailyBriefingWizard/DailyBriefingWizard.astro';
+---
+
+<DocsLayout
+  title="Daily Briefing"
+  description="Generate personalized daily briefings from your calendar and past meeting notes with Claude Code"
+  category="Command"
+>
+  <h2>Overview</h2>
+
+  <p>
+    The <code>/daily-briefing</code> command generates a comprehensive daily briefing by analyzing your
+    Google Calendar events and searching your Obsidian vault for relevant context from past meetings.
+  </p>
+
+  <h2>What You'll Get</h2>
+
+  <ul>
+    <li><strong>Quick Overview</strong> - Critical action items and key context for the day</li>
+    <li><strong>Per-Event Context</strong> - Relevant notes and action items for each meeting</li>
+    <li><strong>Personal Follow-Ups</strong> - Suggested questions for one-on-ones based on past conversations</li>
+    <li><strong>Action Items</strong> - Extracted tasks from previous meetings with attendee highlighting</li>
+    <li><strong>Quoted Context</strong> - Exact quotes from past meetings with source links</li>
+  </ul>
+
+  <h2>How It Works</h2>
+
+  <ol>
+    <li><strong>Fetch Calendar Events</strong> - Python script retrieves today's events via Google Calendar API</li>
+    <li><strong>Search Meeting Notes</strong> - Claude searches your Obsidian vault for relevant past meetings</li>
+    <li><strong>Extract Context</strong> - Action items, decisions, and personal context are identified</li>
+    <li><strong>Generate Briefing</strong> - Structured markdown briefing is created with grounded quotes</li>
+  </ol>
+
+  <h2 id="installation">Installation</h2>
+
+  <DailyBriefingWizard />
+
+  <h2 id="usage">Usage</h2>
+
+  <h3>Manual Usage</h3>
+
+  <p>First, fetch your calendar events:</p>
+
+  <pre><code>~/scripts/calendar-events/fetch_today_events.py > /tmp/calendar.json</code></pre>
+
+  <p>Then run the Claude command with the calendar data:</p>
+
+  <pre><code>cat /tmp/calendar.json | claude -p "/daily-briefing"</code></pre>
+
+  <h3>Automated Usage (n8n)</h3>
+
+  <p>
+    If you've set up the n8n workflow, briefings are generated automatically at 5am on weekdays.
+    The workflow handles fetching calendar data, running the command, and saving the output.
+  </p>
+
+  <h2 id="output">Output Format</h2>
+
+  <p>The generated Obsidian note follows this structure:</p>
+
+  <pre><code># Daily Briefing - 2025-12-16
+&gt; Generated using filesystem search
+
+&gt; [!important] Quick Overview
+&gt; - Critical action item for today's standup
+&gt; - Key decision point from last week's planning
+&gt; - Blocker to discuss with engineering lead
+
+## Table of Contents
+- [Team Standup (09:00 - 09:30)](#team-standup-0900---0930)
+- [1:1 with Jason (10:00 - 10:30)](#11-with-jason-1000---1030)
+
+---
+
+## Team Standup (09:00 - 09:30)
+
+**Attendees**: erik, jason, sarah
+
+### [[2025-12-13 Sprint Planning]]
+(Relevance: 75 points | Recency: 3 days ago)
+
+**Action Items**:
+- [ ] @Erik — Review API spec before Monday standup ⭐
+- [ ] @Jason — Update deployment scripts
+
+**Quoted Context**:
+&gt; "We agreed to prioritize the authentication refactor this sprint."
+&gt; "Blocked on infrastructure team for staging environment."
+
+---
+
+## 1:1 with Jason (10:00 - 10:30)
+
+**Attendees**: jason
+
+&gt; [!tip] Personal Follow-Up
+&gt; "How was your daughter's soccer tournament?" → from [[2025-12-09 1-1 Jason]]
+
+### [[2025-12-09 1-1 Jason]]
+(Relevance: 82 points | Recency: 7 days ago)
+
+**Action Items**:
+- [ ] @Jason — Draft proposal for new CI pipeline
+
+**Quoted Context**:
+&gt; "Jason mentioned feeling stretched thin across multiple projects."
+
+---
+
+*Generated at 2025-12-16 05:00:15*
+*Found 8 relevant notes across 5 events*</code></pre>
+
+  <h2 id="meeting-notes">Meeting Note Format</h2>
+
+  <p>
+    For the Daily Briefing to find relevant context, your meeting notes need consistent frontmatter.
+    The search relies on this metadata to match past meetings with today's calendar events.
+  </p>
+
+  <h3>Required Frontmatter</h3>
+
+  <pre><code>---
+title: "Weekly Sync with Engineering Team"
+date: 2025-12-13
+people:
+  - jason
+  - sarah
+  - erik
+type: meeting
+tags:
+  - engineering
+  - sprint-planning
+---</code></pre>
+
+  <h3>Key Fields for Search</h3>
+
+  <ul>
+    <li><strong>title</strong> - Descriptive meeting title (matched against calendar event titles)</li>
+    <li><strong>date</strong> - Meeting date in YYYY-MM-DD format (used for recency scoring)</li>
+    <li><strong>people</strong> - List of attendee first names (matched against calendar attendees)</li>
+    <li><strong>type</strong> - Meeting type: <code>meeting</code>, <code>one-on-one</code>, <code>standup</code>, etc.</li>
+    <li><strong>tags</strong> - Topics and themes for additional context matching</li>
+  </ul>
+
+  <h3>Optional but Helpful</h3>
+
+  <ul>
+    <li><strong>project</strong> - Associated project name</li>
+    <li><strong>status</strong> - Meeting status (completed, cancelled)</li>
+    <li><strong>location</strong> - Meeting location or video link</li>
+  </ul>
+
+  <div class="p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg my-4 not-prose">
+    <p class="font-semibold text-amber-400 mb-2">Why frontmatter matters:</p>
+    <p class="text-text-secondary text-sm">
+      Without proper frontmatter, the search can only match on file content. With good metadata,
+      you get much more accurate results because the command can match attendee names to your
+      calendar, prioritize recent meetings, and identify relevant one-on-ones for personal follow-ups.
+    </p>
+  </div>
+
+  <h2 id="configuration">Configuration</h2>
+
+  <h3>Obsidian Vault Structure</h3>
+
+  <p>The command expects meeting notes organized by quarter:</p>
+
+  <pre><code>~/Obsidian/Vault/
+├── Meetings/
+│   └── 2025/
+│       ├── Q125/
+│       ├── Q225/
+│       ├── Q325/
+│       └── Q425/
+├── Dashboard/
+│   └── Daily Briefing.md  (output location)
+└── Templates/
+    └── Tag Reference.md   (name normalization)</code></pre>
+
+  <h3>Customizing Paths</h3>
+
+  <p>
+    Edit <code>~/.claude/commands/daily-briefing.md</code> to customize:
+  </p>
+
+  <ul>
+    <li>Meeting notes directory structure</li>
+    <li>Output file location</li>
+    <li>Tag Reference file location</li>
+    <li>Relevance scoring thresholds</li>
+  </ul>
+
+  <h2 id="downloads">Downloads</h2>
+
+  <p>Prefer to install manually? Download the files directly:</p>
+
+  <div class="flex flex-wrap gap-4 my-6 not-prose">
+    <a
+      href="/downloads/daily-briefing/fetch_today_events.py"
+      download
+      class="download-btn"
+      data-umami-event="download-click"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+      </svg>
+      fetch_today_events.py
+    </a>
+    <a
+      href="/downloads/daily-briefing/daily-briefing.md"
+      download
+      class="download-btn"
+      data-umami-event="download-click"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+      </svg>
+      daily-briefing.md (Claude Command)
+    </a>
+    <a
+      href="/downloads/daily-briefing/Morning briefing.json"
+      download
+      class="download-btn"
+      data-umami-event="download-click"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+      </svg>
+      n8n Workflow (Optional)
+    </a>
+  </div>
+
+  <h2>Troubleshooting</h2>
+
+  <h3>Error: Credentials file not found</h3>
+  <p>
+    Ensure your Google OAuth credentials are at <code>~/.google/credentials.json</code>.
+    Follow the Google Calendar API Quickstart to create credentials.
+  </p>
+
+  <h3>Error: Token refresh failed</h3>
+  <p>
+    Delete <code>~/.google/token.json</code> and run the script again to re-authenticate.
+  </p>
+
+  <h3>No events found</h3>
+  <p>
+    Check that you're using the correct calendar ID. The script uses <code>primary</code> by default.
+    Use <code>--calendar-id</code> to specify a different calendar.
+  </p>
+
+  <h3>Command not found: /daily-briefing</h3>
+  <p>
+    Make sure the <code>daily-briefing.md</code> file is in your <code>~/.claude/commands/</code> directory
+    and restart Claude Code.
+  </p>
+
+  <h3>No relevant notes found</h3>
+  <p>
+    The command searches <code>Meetings/YYYY/Q#YY/</code> directories. Ensure your meeting notes
+    are organized in this structure and contain attendee names matching your calendar.
+  </p>
+</DocsLayout>
