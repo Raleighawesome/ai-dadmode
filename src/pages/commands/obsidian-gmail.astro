@@ -1,0 +1,181 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import ObsidianGmailWizard from '../../components/ObsidianGmailWizard/ObsidianGmailWizard.astro';
+---
+
+<DocsLayout
+  title="Obsidian Gmail"
+  description="Sync labeled Gmail emails to your Obsidian vault as searchable markdown notes"
+  category="Script"
+>
+  <h2>Overview</h2>
+
+  <p>
+    The <strong>Obsidian Gmail</strong> script automatically syncs your labeled Gmail emails to your
+    Obsidian vault as formatted markdown notes. It uses Gmail's IMAP interface with OAuth 2.0 for
+    secure authentication, including support for Google Workspace SSO.
+  </p>
+
+  <h2>What You'll Get</h2>
+
+  <ul>
+    <li><strong>Automatic Email Ingestion</strong> - Labeled emails are saved as markdown in your vault</li>
+    <li><strong>Deduplication</strong> - Never creates duplicate notes; updates in-place when content changes</li>
+    <li><strong>Rich Metadata</strong> - YAML frontmatter with sender, recipients, date, labels, and Gmail link</li>
+    <li><strong>Organized Structure</strong> - Emails organized by year and quarter (e.g., <code>Emails/2025/Q425/</code>)</li>
+    <li><strong>Slack Thread Support</strong> - Special handling for Slack notification emails</li>
+  </ul>
+
+  <h2>How It Works</h2>
+
+  <ol>
+    <li><strong>Label Emails</strong> - Apply a "Save" or "AI/Ingest" label to emails you want to capture</li>
+    <li><strong>Run the Script</strong> - The script fetches labeled emails via IMAP</li>
+    <li><strong>Convert to Markdown</strong> - Emails are converted to clean markdown with frontmatter</li>
+    <li><strong>Save to Obsidian</strong> - Notes are saved to your vault's Emails folder</li>
+  </ol>
+
+  <h2 id="installation">Installation</h2>
+
+  <ObsidianGmailWizard />
+
+  <h2 id="usage">Usage</h2>
+
+  <h3>Basic Usage</h3>
+
+  <p>Run the script to sync emails with the "Save" label:</p>
+
+  <pre><code>python3 ~/scripts/ai_scripts/imap_ingest_md_only.py</code></pre>
+
+  <h3>Command Line Options</h3>
+
+  <pre><code># Sync with specific labels
+python3 ~/scripts/ai_scripts/imap_ingest_md_only.py --labels "Save" "Important"
+
+# Sync emails from the last 30 days
+python3 ~/scripts/ai_scripts/imap_ingest_md_only.py --since 30d
+
+# Dry run (show what would be synced without creating files)
+python3 ~/scripts/ai_scripts/imap_ingest_md_only.py --dry-run
+
+# Limit to 100 emails
+python3 ~/scripts/ai_scripts/imap_ingest_md_only.py --max 100
+
+# Use a different vault
+python3 ~/scripts/ai_scripts/imap_ingest_md_only.py --vault-root ~/Obsidian/WorkVault</code></pre>
+
+  <h2 id="output">Output Format</h2>
+
+  <p>The generated Obsidian note follows this structure:</p>
+
+  <pre><code>---
+type: email
+source: imap/gmail
+gmail:
+  x_gm_msgid: "1234567890"
+  x_gm_thrid: "1234567890"
+  message_id: "unique-message-id@mail.gmail.com"
+subject: "Meeting Follow-up: Q4 Planning"
+from: &#123;"name": "Jane Smith", "email": "jane@example.com"&#125;
+to: [&#123;"name": "You", "email": "you@gmail.com"&#125;]
+cc: []
+date: 2025-12-15T10:30:00-05:00
+labels: ["Save", "Work"]
+attachments: []
+checksum: "sha256:abc123..."
+ingested_at: 2025-12-15T15:45:00Z
+canonical_url: "https://mail.google.com/mail/u/0/#inbox/1234567890"
+---
+
+Hi,
+
+Following up on our Q4 planning meeting...
+
+Best,
+Jane</code></pre>
+
+  <h2 id="labels">Gmail Labels</h2>
+
+  <p>The script recognizes these Gmail labels:</p>
+
+  <ul>
+    <li><code>Save</code> or <code>AI/Ingest</code> - Standard email ingestion</li>
+    <li><code>Slack-Thread</code> or <code>AI/Slack-Thread</code> - Slack notification emails (marked as type: slack)</li>
+  </ul>
+
+  <p>Create these labels in Gmail and apply them to emails you want to sync.</p>
+
+  <h2 id="configuration">Configuration</h2>
+
+  <h3>Script Configuration</h3>
+
+  <p>Edit the script to customize these settings:</p>
+
+  <pre><code># Line 38: Your Gmail address
+os.environ['GMAIL_USER'] = 'your-email@gmail.com'
+
+# Line 40: Your Obsidian vault root
+DEFAULT_VAULT_ROOT = "~/Obsidian/YourVault"
+
+# Line 41-42: Folder structure
+EMAILS_DIR = "Emails"
+ASSETS_DIR = "Assets/Emails"</code></pre>
+
+  <h3>Automation with cron</h3>
+
+  <p>Run automatically every hour:</p>
+
+  <pre><code># Edit crontab
+crontab -e
+
+# Add this line (runs every hour)
+0 * * * * /usr/bin/python3 ~/scripts/ai_scripts/imap_ingest_md_only.py >> ~/logs/gmail-sync.log 2>&1</code></pre>
+
+  <h2 id="downloads">Downloads</h2>
+
+  <p>Prefer to install manually? Download the script directly:</p>
+
+  <div class="flex flex-wrap gap-4 my-6 not-prose">
+    <a
+      href="/downloads/obsidian-gmail/imap_ingest_md_only.py"
+      download
+      class="download-btn"
+      data-umami-event="download-click"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+      </svg>
+      imap_ingest_md_only.py
+    </a>
+  </div>
+
+  <h2>Troubleshooting</h2>
+
+  <h3>Error: Credentials file not found</h3>
+  <p>
+    Ensure your OAuth client file is at <code>~/scripts/ai_scripts/client_secret.json</code>.
+    Download it from the Google Cloud Console.
+  </p>
+
+  <h3>Error: Token refresh failed</h3>
+  <p>
+    Delete <code>~/scripts/ai_scripts/gmail_oauth_token.json</code> and run the script again to re-authenticate.
+  </p>
+
+  <h3>Error: GMAIL_USER not set</h3>
+  <p>
+    Either edit line 38 in the script to set your email, or set the environment variable:
+    <code>export GMAIL_USER='your-email@gmail.com'</code>
+  </p>
+
+  <h3>No emails found</h3>
+  <p>
+    Make sure you've applied the "Save" label to emails in Gmail. The script only syncs labeled emails.
+  </p>
+
+  <h3>Duplicate files appearing</h3>
+  <p>
+    The script uses deduplication based on Gmail message IDs. If you see duplicates, delete
+    <code>.imap_ingest_index.json</code> in your vault root and run again.
+  </p>
+</DocsLayout>
