@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Book a Call">
+  <head slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+
+  <section class="pt-32 pb-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl sm:text-5xl font-bold text-text-primary mb-6">
+          Book a Call
+        </h1>
+        <p class="text-lg text-text-secondary max-w-2xl mx-auto">
+          Pick a time that works for you. Looking forward to chatting!
+        </p>
+      </div>
+
+      <!-- Cal.com Embed -->
+      <div class="card">
+        <div
+          id="cal-embed"
+          class="rounded-lg overflow-hidden"
+          style="width:100%"
+        ></div>
+      </div>
+
+      <!-- Back link -->
+      <div class="text-center mt-12">
+        <a href="/" class="text-accent hover:text-accent-hover transition-colors">
+          ← Back to Home
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cal.com embed script -->
+  <script is:inline>
+    (function (C, A, L) {
+      let p = function (a, ar) {
+        a.q.push(ar);
+      };
+      let d = C.document;
+      C.Cal =
+        C.Cal ||
+        function () {
+          let cal = C.Cal;
+          let ar = arguments;
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            d.head.appendChild(d.createElement("script")).src = A;
+            cal.loaded = true;
+          }
+          if (ar[0] === L) {
+            const api = function () {
+              p(api, arguments);
+            };
+            const namespace = ar[1];
+            api.q = api.q || [];
+            if (typeof namespace === "string") {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p(cal.ns[namespace], ar);
+              p(cal, ["initNamespace", namespace]);
+            } else p(cal, ar);
+            return;
+          }
+          p(cal, ar);
+        };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    Cal("init", "ai-tools", { origin: "https://cal.com" });
+
+    Cal.ns["ai-tools"]("inline", {
+      elementOrSelector: "#cal-embed",
+      calLink: "eriknewby",
+      layout: "month_view",
+      config: {
+        theme: "dark",
+      },
+    });
+
+    Cal.ns["ai-tools"]("ui", {
+      theme: "dark",
+      styles: {
+        branding: { brandColor: "#3b82f6" },
+      },
+      hideEventTypeDetails: false,
+      layout: "month_view",
+    });
+  </script>
+</BaseLayout>
