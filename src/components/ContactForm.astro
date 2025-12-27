@@ -1,0 +1,147 @@
+---
+
+---
+
+<div id="contact-form-container">
+  <form id="contact-form" class="space-y-6">
+    <div>
+      <label for="name" class="block text-sm font-medium text-text-primary mb-2">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        class="w-full px-4 py-3 bg-surface border border-border rounded-lg text-text-primary placeholder-text-muted focus:outline-none focus:border-accent transition-colors"
+        placeholder="Your name"
+      />
+    </div>
+
+    <div>
+      <label for="email" class="block text-sm font-medium text-text-primary mb-2">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        class="w-full px-4 py-3 bg-surface border border-border rounded-lg text-text-primary placeholder-text-muted focus:outline-none focus:border-accent transition-colors"
+        placeholder="you@example.com"
+      />
+    </div>
+
+    <div>
+      <label for="projectType" class="block text-sm font-medium text-text-primary mb-2">What do you need help with?</label>
+      <select
+        id="projectType"
+        name="projectType"
+        required
+        class="w-full px-4 py-3 bg-surface border border-border rounded-lg text-text-primary focus:outline-none focus:border-accent transition-colors"
+      >
+        <option value="">Select an option...</option>
+        <option value="AI Workflow Setup">AI Workflow Setup</option>
+        <option value="Custom Automation">Custom Automation</option>
+        <option value="Training/Consulting">Training/Consulting</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="message" class="block text-sm font-medium text-text-primary mb-2">Message</label>
+      <textarea
+        id="message"
+        name="message"
+        required
+        rows="5"
+        class="w-full px-4 py-3 bg-surface border border-border rounded-lg text-text-primary placeholder-text-muted focus:outline-none focus:border-accent transition-colors resize-none"
+        placeholder="Tell me about your project..."
+      ></textarea>
+    </div>
+
+    <div id="form-error" class="hidden p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm"></div>
+
+    <button
+      type="submit"
+      id="submit-btn"
+      class="btn-primary w-full"
+    >
+      <span id="submit-text">Send Message</span>
+      <span id="submit-loading" class="hidden">Sending...</span>
+    </button>
+  </form>
+
+  <div id="form-success" class="hidden text-center py-8">
+    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
+      <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <h3 class="text-xl font-semibold text-text-primary mb-2">Thanks for reaching out!</h3>
+    <p class="text-text-secondary">I'll get back to you soon.</p>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const formSuccess = document.getElementById('form-success');
+  const formError = document.getElementById('form-error');
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const submitText = document.getElementById('submit-text');
+  const submitLoading = document.getElementById('submit-loading');
+
+  function setLoading(loading: boolean) {
+    submitBtn.disabled = loading;
+    submitText?.classList.toggle('hidden', loading);
+    submitLoading?.classList.toggle('hidden', !loading);
+  }
+
+  function showError(message: string) {
+    if (formError) {
+      formError.textContent = message;
+      formError.classList.remove('hidden');
+    }
+  }
+
+  function hideError() {
+    formError?.classList.add('hidden');
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError();
+    setLoading(true);
+
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      projectType: formData.get('projectType'),
+      message: formData.get('message'),
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send message');
+      }
+
+      // Success - show confirmation
+      form.classList.add('hidden');
+      formSuccess?.classList.remove('hidden');
+
+      // Track in Umami
+      if (typeof umami !== 'undefined') {
+        umami.track('contact-form-submit');
+      }
+    } catch (error) {
+      showError(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  });
+</script>
