@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
 ---
 
 <BaseLayout title="Work With Me">
@@ -76,21 +77,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <!-- Cal.com Embed -->
+      <!-- Contact Form -->
       <div class="card">
         <div class="text-center mb-8">
-          <h2 class="text-2xl font-bold text-text-primary mb-2">Book a Call</h2>
+          <h2 class="text-2xl font-bold text-text-primary mb-2">Get in Touch</h2>
           <p class="text-text-secondary">
-            Pick a time that works for you. No commitment, just a conversation.
+            Tell me about your project and I'll get back to you soon.
           </p>
         </div>
 
-        <!-- Cal.com inline embed -->
-        <div
-          id="cal-embed"
-          class="rounded-lg overflow-hidden"
-          style="width:100%"
-        ></div>
+        <ContactForm />
       </div>
 
       <!-- Back link -->
@@ -101,74 +97,4 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
   </section>
-
-  <!-- Cal.com embed script -->
-  <script is:inline>
-    (function (C, A, L) {
-      let p = function (a, ar) {
-        a.q.push(ar);
-      };
-      let d = C.document;
-      C.Cal =
-        C.Cal ||
-        function () {
-          let cal = C.Cal;
-          let ar = arguments;
-          if (!cal.loaded) {
-            cal.ns = {};
-            cal.q = cal.q || [];
-            d.head.appendChild(d.createElement("script")).src = A;
-            cal.loaded = true;
-          }
-          if (ar[0] === L) {
-            const api = function () {
-              p(api, arguments);
-            };
-            const namespace = ar[1];
-            api.q = api.q || [];
-            if (typeof namespace === "string") {
-              cal.ns[namespace] = cal.ns[namespace] || api;
-              p(cal.ns[namespace], ar);
-              p(cal, ["initNamespace", namespace]);
-            } else p(cal, ar);
-            return;
-          }
-          p(cal, ar);
-        };
-    })(window, "https://app.cal.com/embed/embed.js", "init");
-
-    Cal("init", "ai-tools", { origin: "https://cal.com" });
-
-    Cal.ns["ai-tools"]("inline", {
-      elementOrSelector: "#cal-embed",
-      calLink: "eriknewby",
-      layout: "month_view",
-      config: {
-        theme: "dark",
-      },
-    });
-
-    Cal.ns["ai-tools"]("ui", {
-      theme: "dark",
-      styles: {
-        branding: { brandColor: "#3b82f6" },
-      },
-      hideEventTypeDetails: false,
-      layout: "month_view",
-    });
-
-    // Track consulting page view
-    if (typeof umami !== 'undefined') {
-      umami.track('consulting-view');
-    }
-
-    // Track calendar interaction on first click
-    let calendarTracked = false;
-    document.getElementById('cal-embed')?.addEventListener('click', () => {
-      if (!calendarTracked && typeof umami !== 'undefined') {
-        umami.track('calendar-interact');
-        calendarTracked = true;
-      }
-    });
-  </script>
 </BaseLayout>
