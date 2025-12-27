@@ -6,9 +6,10 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title, description = "Scripts, commands, and automation for getting things done with AI" } = Astro.props;
+const { title, description = "Scripts, commands, and automation for getting things done with AI", noindex = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,7 +23,7 @@ const { title, description = "Scripts, commands, and automation for getting thin
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <title>{title} | AI Tools</title>
-    <slot name="head" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <!-- Umami Analytics - Update data-website-id after setup -->
     <script defer src="https://analytics.dadmode.cc/script.js" data-website-id="b4c76c43-8e14-401d-991b-3cbcd922d865"></script>
   </head>
