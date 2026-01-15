@@ -9,7 +9,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       <div class="text-center mb-12">
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00D9A5]/10 border border-[#00D9A5]/30 mb-6">
-          <span class="text-[#00D9A5] text-sm font-medium">Coming Soon to the App Store</span>
+          <span class="text-[#00D9A5] text-sm font-medium">Now with On-Device AI</span>
         </div>
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary mb-6">
           Never Exceed Your<br/>
@@ -22,14 +22,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <!-- Hero Screenshot -->
       <div class="flex justify-center">
-        <div class="relative">
+        <a href="/onpace/dashboard.png" target="_blank" class="relative block cursor-zoom-in">
           <div class="absolute -inset-4 bg-[#00D9A5]/20 blur-3xl rounded-full"></div>
           <img
             src="/onpace/dashboard.png"
             alt="OnPace Lease Dashboard showing +160 miles available"
-            class="relative w-64 sm:w-72 rounded-3xl shadow-2xl border border-white/10"
+            class="relative w-64 sm:w-72 rounded-3xl shadow-2xl border border-white/10 hover:scale-105 transition-transform"
           />
-        </div>
+        </a>
       </div>
     </div>
   </section>
@@ -86,29 +86,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </p>
         </div>
 
-        <!-- Feature 4: Quick Entry -->
+        <!-- Feature 4: Smart Entry -->
         <div class="card">
           <div class="w-12 h-12 rounded-xl bg-[#00D9A5]/10 flex items-center justify-center mb-4">
             <svg class="w-6 h-6 text-[#00D9A5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-text-primary mb-2">Quick Entry</h3>
+          <h3 class="text-xl font-semibold text-text-primary mb-2">Smart Entry</h3>
           <p class="text-text-secondary">
-            Add odometer readings in seconds with the custom numpad. Option to add notes and backdate readings.
+            Add readings in seconds with the custom numpad. After each entry, on-device AI provides personalized context like "Great week — you're building a buffer!"
           </p>
         </div>
 
-        <!-- Feature 5: History & Charts -->
+        <!-- Feature 5: AI-Powered History -->
         <div class="card">
           <div class="w-12 h-12 rounded-xl bg-[#00D9A5]/10 flex items-center justify-center mb-4">
             <svg class="w-6 h-6 text-[#00D9A5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-text-primary mb-2">History & Charts</h3>
+          <h3 class="text-xl font-semibold text-text-primary mb-2">AI-Powered History</h3>
           <p class="text-text-secondary">
-            Track your pace over time with interactive charts. See how your driving patterns affect your allowance.
+            Track your pace with charts and AI-generated monthly insights. On-device AI detects driving patterns like "Consistent weekday driving" or "Heavy travel month."
           </p>
         </div>
 
@@ -143,41 +143,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <!-- Screenshot Grid -->
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="text-center">
-          <img
-            src="/onpace/dashboard.png"
-            alt="Dashboard view"
-            class="w-full max-w-[200px] mx-auto rounded-2xl shadow-lg border border-white/10 mb-4"
-          />
+          <a href="/onpace/dashboard.png" target="_blank" class="block cursor-zoom-in">
+            <img
+              src="/onpace/dashboard.png"
+              alt="Dashboard view"
+              class="w-full max-w-[200px] mx-auto rounded-2xl shadow-lg border border-white/10 mb-4 hover:scale-105 transition-transform"
+            />
+          </a>
           <h4 class="font-medium text-text-primary">Dashboard</h4>
           <p class="text-sm text-text-secondary">Your pace at a glance</p>
         </div>
 
         <div class="text-center">
-          <img
-            src="/onpace/history-view.png"
-            alt="History view with chart"
-            class="w-full max-w-[200px] mx-auto rounded-2xl shadow-lg border border-white/10 mb-4"
-          />
+          <a href="/onpace/history-view.png" target="_blank" class="block cursor-zoom-in">
+            <img
+              src="/onpace/history-view.png"
+              alt="History view with chart"
+              class="w-full max-w-[200px] mx-auto rounded-2xl shadow-lg border border-white/10 mb-4 hover:scale-105 transition-transform"
+            />
+          </a>
           <h4 class="font-medium text-text-primary">History</h4>
           <p class="text-sm text-text-secondary">Track your progress</p>
         </div>
 
         <div class="text-center">
-          <img
-            src="/onpace/quick-entry.png"
-            alt="Quick entry numpad"
-            class="w-full max-w-[200px] mx-auto rounded-2xl shadow-lg border border-white/10 mb-4"
-          />
+          <a href="/onpace/quick-entry.png" target="_blank" class="block cursor-zoom-in">
+            <img
+              src="/onpace/quick-entry.png"
+              alt="Quick entry numpad"
+              class="w-full max-w-[200px] mx-auto rounded-2xl shadow-lg border border-white/10 mb-4 hover:scale-105 transition-transform"
+            />
+          </a>
           <h4 class="font-medium text-text-primary">Quick Entry</h4>
           <p class="text-sm text-text-secondary">Add readings fast</p>
         </div>
 
         <div class="text-center">
-          <img
-            src="/onpace/settings.png"
-            alt="Settings view"
-            class="w-full max-w-[200px] mx-auto rounded-2xl shadow-lg border border-white/10 mb-4"
-          />
+          <a href="/onpace/settings.png" target="_blank" class="block cursor-zoom-in">
+            <img
+              src="/onpace/settings.png"
+              alt="Settings view"
+              class="w-full max-w-[200px] mx-auto rounded-2xl shadow-lg border border-white/10 mb-4 hover:scale-105 transition-transform"
+            />
+          </a>
           <h4 class="font-medium text-text-primary">Settings</h4>
           <p class="text-sm text-text-secondary">Configure your lease</p>
         </div>
@@ -185,8 +193,75 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- Widget Showcase -->
+  <!-- On-Device AI Intelligence -->
   <section class="py-20 bg-surface">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#4A9EFF]/10 border border-[#4A9EFF]/30 mb-6">
+          <svg class="w-4 h-4 text-[#4A9EFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+          <span class="text-[#4A9EFF] text-sm font-medium">Powered by Apple Intelligence</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold text-text-primary mb-4">
+          Smart Insights, Completely Private
+        </h2>
+        <p class="text-text-secondary max-w-2xl mx-auto">
+          OnPace Lease uses Apple's on-device AI to provide personalized insights about your driving patterns. Your data never leaves your device.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Dashboard Insights -->
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-2xl bg-[#4A9EFF]/10 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-[#4A9EFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-text-primary mb-2">Dashboard Insights</h3>
+          <p class="text-text-secondary">
+            AI-generated observations about your pace, trends, and projections appear right on your dashboard.
+          </p>
+        </div>
+
+        <!-- Post-Entry Context -->
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-2xl bg-[#4A9EFF]/10 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-[#4A9EFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-text-primary mb-2">Smart Feedback</h3>
+          <p class="text-text-secondary">
+            After each odometer entry, get personalized context like "You're 3 days ahead of pace" or "Light driving week."
+          </p>
+        </div>
+
+        <!-- Monthly Patterns -->
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-2xl bg-[#4A9EFF]/10 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-[#4A9EFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-text-primary mb-2">Monthly Patterns</h3>
+          <p class="text-text-secondary">
+            History view groups readings by month with AI summaries like "Consistent weekday driving" or "Heavy travel month."
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center">
+        <p class="text-text-muted text-sm">
+          On-device AI requires iOS 26 or later on supported devices. Core tracking works on iOS 17+.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Widget Showcase -->
+  <section class="py-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
@@ -225,16 +300,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div class="flex justify-center gap-6">
-          <img
-            src="/onpace/widget-large.png"
-            alt="Large home screen widget"
-            class="w-48 sm:w-56 rounded-2xl shadow-lg"
-          />
-          <img
-            src="/onpace/widget-med-small.png"
-            alt="Medium and small widgets"
-            class="w-48 sm:w-56 rounded-2xl shadow-lg hidden sm:block"
-          />
+          <a href="/onpace/widget-large.png" target="_blank" class="cursor-zoom-in">
+            <img
+              src="/onpace/widget-large.png"
+              alt="Large home screen widget"
+              class="w-48 sm:w-56 rounded-2xl shadow-lg hover:scale-105 transition-transform"
+            />
+          </a>
+          <a href="/onpace/widget-med-small.png" target="_blank" class="cursor-zoom-in hidden sm:block">
+            <img
+              src="/onpace/widget-med-small.png"
+              alt="Medium and small widgets"
+              class="w-48 sm:w-56 rounded-2xl shadow-lg hover:scale-105 transition-transform"
+            />
+          </a>
         </div>
       </div>
     </div>
@@ -299,20 +378,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         Stop Guessing, Start Tracking
       </h2>
       <p class="text-text-secondary max-w-xl mx-auto mb-8">
-        OnPace Lease is coming soon to the App Store. A simple, one-time purchase to help you stay within your lease allowance.
+        OnPace Lease is available now on the App Store. A simple, one-time purchase to help you stay within your lease allowance.
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#" class="btn-primary inline-flex items-center gap-2 opacity-75 cursor-not-allowed">
+        <a href="https://apps.apple.com/us/app/onpace-lease/id6757761076" class="btn-primary inline-flex items-center gap-2">
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
           </svg>
-          Coming to App Store
+          Download on the App Store
         </a>
       </div>
 
       <p class="text-text-muted text-sm mt-6">
-        Requires iOS 17 or later. iPhone and iPad.
+        Requires iOS 17 or later. iPhone and iPad. AI features require iOS 26+.
       </p>
     </div>
   </section>
