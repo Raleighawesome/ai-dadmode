@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Support - OnPace Lease" description="Get help with OnPace Lease - your vehicle lease mileage tracking app.">
+  <section class="pt-24 pb-16">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-8">
+        <a href="/onpace" class="text-[#00D9A5] hover:text-[#00D9A5]/80 transition-colors text-sm">
+          ← Back to OnPace Lease
+        </a>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-bold text-text-primary mb-2">Support</h1>
+      <p class="text-text-muted mb-12">We're here to help you get the most out of OnPace Lease.</p>
+
+      <div class="prose prose-invert max-w-none space-y-8">
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">Contact Us</h2>
+          <p class="text-text-secondary mb-4">
+            Have a question, found a bug, or want to suggest a feature? We'd love to hear from you.
+          </p>
+          <p class="text-text-secondary">
+            <strong>Email:</strong> <a href="mailto:erik@eriknewby.com" class="text-[#00D9A5] hover:underline">erik@eriknewby.com</a>
+          </p>
+          <p class="text-text-muted text-sm mt-2">
+            We typically respond within 24-48 hours.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">Frequently Asked Questions</h2>
+
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">How do I add an odometer reading?</h3>
+              <p class="text-text-secondary">
+                Tap the green "+" button on the main dashboard, enter your current odometer reading using the number pad, and tap "Save Reading."
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">What does "miles ahead" or "miles behind" mean?</h3>
+              <p class="text-text-secondary">
+                OnPace calculates your ideal daily mileage based on your lease terms. "Miles ahead" means you've driven less than your daily allowance—you have room to spare. "Miles behind" means you're on pace to exceed your lease allowance.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">How do I edit my lease details?</h3>
+              <p class="text-text-secondary">
+                Tap the gear icon in the top-right corner of the dashboard to open Settings. From there you can edit your vehicle name, lease dates, annual allowance, and overage rate.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">Can I track multiple vehicles?</h3>
+              <p class="text-text-secondary">
+                Currently OnPace Lease supports one vehicle at a time. Multi-vehicle support is planned for a future update.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">How do I enable iCloud sync?</h3>
+              <p class="text-text-secondary">
+                During initial setup, you'll be asked to choose between local storage and iCloud sync. You can also change this later in Settings under "Data Storage."
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">Managing Your Subscription</h2>
+
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">How do I restore my purchase on a new device?</h3>
+              <p class="text-text-secondary">
+                Open the app, go to Settings, and tap "Restore Purchases." Make sure you're signed in with the same Apple ID you used for the original purchase.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">How do I cancel my subscription?</h3>
+              <p class="text-text-secondary mb-2">
+                Subscriptions are managed through your Apple ID:
+              </p>
+              <ol class="list-decimal list-inside text-text-secondary space-y-1 ml-2">
+                <li>Open the <strong>Settings</strong> app on your iPhone</li>
+                <li>Tap your name at the top</li>
+                <li>Tap <strong>Subscriptions</strong></li>
+                <li>Select <strong>OnPace Lease</strong></li>
+                <li>Tap <strong>Cancel Subscription</strong></li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">Will I lose my data if I cancel?</h3>
+              <p class="text-text-secondary">
+                No. Your odometer readings and lease data remain on your device. You just won't be able to add new readings until you resubscribe.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">Troubleshooting</h2>
+
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">The widget isn't updating</h3>
+              <p class="text-text-secondary">
+                iOS widgets update periodically (approximately every 30 minutes). Try removing and re-adding the widget, or restart your device. Make sure you've added at least one odometer reading.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">My data isn't syncing between devices</h3>
+              <p class="text-text-secondary">
+                Ensure iCloud sync is enabled in Settings on both devices, and that both devices are signed in to the same iCloud account. Check that iCloud Drive is enabled in your device's Settings → [Your Name] → iCloud.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-medium text-text-primary mb-2">I entered the wrong starting odometer</h3>
+              <p class="text-text-secondary">
+                Go to Settings and tap "Edit Starting Odometer" to correct it. This will recalculate all your pace metrics.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="border-white/10 my-8" />
+
+        <section>
+          <h2 class="text-xl font-semibold text-text-primary mb-3">Other Resources</h2>
+          <ul class="space-y-2">
+            <li>
+              <a href="/onpace/privacy" class="text-[#00D9A5] hover:underline">Privacy Policy</a>
+            </li>
+            <li>
+              <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" class="text-[#00D9A5] hover:underline" target="_blank" rel="noopener">Terms of Use (Apple EULA)</a>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
